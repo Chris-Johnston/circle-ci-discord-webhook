@@ -23,10 +23,10 @@ case $1 in
     ;;
 esac
 
-AUTHOR_NAME="$(git log -1 "$CIRCLE_USERNAME" --pretty="%aN")"
-COMMITTER_NAME="$(git log -1 "$CIRCLE_USERNAME" --pretty="%cN")"
-COMMIT_SUBJECT="$(git log -1 "$CIRCLE_USERNAME" --pretty="%s")"
-COMMIT_MESSAGE="$(git log -1 "$CIRCLE_USERNAME" --pretty="%b")"
+AUTHOR_NAME="$CIRCLE_USERNAME"
+COMMITTER_NAME="$CIRCLE_USERNAME"
+COMMIT_SUBJECT="$CIRCLE_USERNAME"
+COMMIT_MESSAGE="$CIRCLE_USERNAME"
 
 if [ "$AUTHOR_NAME" == "$COMMITTER_NAME" ]; then
   CREDITS="$AUTHOR_NAME authored & committed"
