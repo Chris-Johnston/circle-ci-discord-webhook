@@ -6,6 +6,8 @@ fi
 
 echo -e "[Webhook]: Sending webhook to Discord...\\n";
 
+CONTENT=""
+
 case $1 in
   "success" )
     EMBED_COLOR=3066993
@@ -15,6 +17,7 @@ case $1 in
   "failure" )
     EMBED_COLOR=15158332
     STATUS_MESSAGE="Failed"
+    CONTENT="Hey @everyone look who broke the build!"
     ;;
 
   * )
@@ -44,6 +47,7 @@ TIMESTAMP=$(date --utc +%FT%TZ)
 WEBHOOK_DATA='{
   "username": "",
   "avatar_url": "",
+  "content": '$CONTENT',
   "embeds": [ {
     "color": '$EMBED_COLOR',
     "author": {
