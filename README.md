@@ -1,4 +1,6 @@
-# Travis CI 🡒 Discord Webhook
+# Travis CI 🡒 Discord Webhook (modified)
+
+**This is a modified version meant to support Circle CI. It also @everyone 's people who break the build.**
 
 If you are looking for a way to get build (success/fail) status reports from
 [Travis CI](https://travis-ci.com) in [Discord](https://discordapp.com), stop
