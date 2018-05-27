@@ -10,26 +10,23 @@ case $1 in
   "success" )
     EMBED_COLOR=3066993
     STATUS_MESSAGE="Passed"
-    AVATAR="https://travis-ci.org/images/logos/TravisCI-Mascot-blue.png"
     ;;
 
   "failure" )
     EMBED_COLOR=15158332
     STATUS_MESSAGE="Failed"
-    AVATAR="https://travis-ci.org/images/logos/TravisCI-Mascot-red.png"
     ;;
 
   * )
     EMBED_COLOR=0
     STATUS_MESSAGE="Status Unknown"
-    AVATAR="https://travis-ci.org/images/logos/TravisCI-Mascot-1.png"
     ;;
 esac
 
-AUTHOR_NAME="$(git log -1 "$TRAVIS_COMMIT" --pretty="%aN")"
-COMMITTER_NAME="$(git log -1 "$TRAVIS_COMMIT" --pretty="%cN")"
-COMMIT_SUBJECT="$(git log -1 "$TRAVIS_COMMIT" --pretty="%s")"
-COMMIT_MESSAGE="$(git log -1 "$TRAVIS_COMMIT" --pretty="%b")"
+AUTHOR_NAME="$(git log -1 "$CIRCLE_USERNAME" --pretty="%aN")"
+COMMITTER_NAME="$(git log -1 "$CIRCLE_USERNAME" --pretty="%cN")"
+COMMIT_SUBJECT="$(git log -1 "$CIRCLE_USERNAME" --pretty="%s")"
+COMMIT_MESSAGE="$(git log -1 "$CIRCLE_USERNAME" --pretty="%b")"
 
 if [ "$AUTHOR_NAME" == "$COMMITTER_NAME" ]; then
   CREDITS="$AUTHOR_NAME authored & committed"
@@ -37,8 +34,8 @@ else
   CREDITS="$AUTHOR_NAME authored & $COMMITTER_NAME committed"
 fi
 
-if [[ $TRAVIS_PULL_REQUEST != false ]]; then
-  URL="https://github.com/$TRAVIS_REPO_SLUG/pull/$TRAVIS_PULL_REQUEST"
+if [[ ! -z $CIRCLE_PULL_REQUEST ]]; then
+  URL="https://github.com/$CIRCLE_PR_REPONAME/pull/$CIRCLE_PR_NUMBER"
 else
   URL=""
 fi
@@ -46,26 +43,26 @@ fi
 TIMESTAMP=$(date --utc +%FT%TZ)
 WEBHOOK_DATA='{
   "username": "",
-  "avatar_url": "https://travis-ci.org/images/logos/TravisCI-Mascot-1.png",
+  "avatar_url": "",
   "embeds": [ {
     "color": '$EMBED_COLOR',
     "author": {
-      "name": "Job #'"$TRAVIS_JOB_NUMBER"' (Build #'"$TRAVIS_BUILD_NUMBER"') '"$STATUS_MESSAGE"' - '"$TRAVIS_REPO_SLUG"'",
-      "url": "https://travis-ci.org/'"$TRAVIS_REPO_SLUG"'/builds/'"$TRAVIS_BUILD_ID"'",
+      "name": "Job #'"$CIRCLE_JOB"' (Build #'"$CIRCLE_BUILD_NUM"') '"$STATUS_MESSAGE"' - '"$CIRCLE_PR_REPONAME"'",
+      "url": "https://travis-ci.org/gh/'"$CIRCLE_PROJECT_USERNAME"'/'"$CIRCLE_PROJECT_REPONAME"'/'"$CIRCLE_BUILD_NUM"'",
       "icon_url": "'$AVATAR'"
     },
-    "title": "'"$COMMIT_SUBJECT"'",
+    "title": "'"$CIRCLE_BRANCH"'",
     "url": "'"$URL"'",
-    "description": "'"${COMMIT_MESSAGE//$'\n'/ }"\\n\\n"$CREDITS"'",
+    "description": "'\\n\\n"$CREDITS"'",
     "fields": [
       {
         "name": "Commit",
-        "value": "'"[\`${TRAVIS_COMMIT:0:7}\`](https://github.com/$TRAVIS_REPO_SLUG/commit/$TRAVIS_COMMIT)"'",
+        "value": "'"[\`${CIRCLE_SHA1:0:7}\`](https://github.com/$CIRCLE_PROJECT_REPONAME/commit/$CIRCLE_SHA1)"'",
         "inline": true
       },
       {
         "name": "Branch/Tag",
-        "value": "'"[\`$TRAVIS_BRANCH\`](https://github.com/$TRAVIS_REPO_SLUG/tree/$TRAVIS_BRANCH)"'",
+        "value": "'"[\`$CIRCLE_BRANCH\`](https://github.com/$CIRCLE_PROJECT_REPONAME/tree/$CIRCLE_BRANCH)"'",
         "inline": true
       }
     ],
