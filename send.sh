@@ -47,7 +47,7 @@ TIMESTAMP=$(date --utc +%FT%TZ)
 WEBHOOK_DATA='{
   "username": "",
   "avatar_url": "",
-  "content": '$CONTENT',
+  "content": "'$CONTENT'",
   "embeds": [ {
     "color": '$EMBED_COLOR',
     "author": {
