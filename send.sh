@@ -52,7 +52,7 @@ WEBHOOK_DATA='{
     "color": '$EMBED_COLOR',
     "author": {
       "name": "Job #'"$CIRCLE_JOB"' (Build #'"$CIRCLE_BUILD_NUM"') '"$STATUS_MESSAGE"' - '"$CIRCLE_PR_REPONAME"'",
-      "url": "https://travis-ci.org/gh/'"$CIRCLE_PROJECT_USERNAME"'/'"$CIRCLE_PROJECT_REPONAME"'/'"$CIRCLE_BUILD_NUM"'",
+      "url": "https://circleci.com/gh/'"$CIRCLE_PROJECT_USERNAME"'/'"$CIRCLE_PROJECT_REPONAME"'/'"$CIRCLE_BUILD_NUM"'",
       "icon_url": "'$AVATAR'"
     },
     "title": "'"$CIRCLE_BRANCH"'",
