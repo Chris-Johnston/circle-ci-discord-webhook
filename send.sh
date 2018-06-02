@@ -17,7 +17,7 @@ case $1 in
   "failure" )
     EMBED_COLOR=15158332
     STATUS_MESSAGE="Failed"
-    CONTENT="Hey @everyone look who broke the build!"
+    CONTENT="Hey everyone look who broke the build!"
     ;;
 
   * )
